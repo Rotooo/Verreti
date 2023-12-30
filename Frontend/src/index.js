@@ -1,5 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import HolaMundo from "./components/HolaMundo";
+import * as ReactDOMClient from 'react-dom/client';
+import App from './app';
+import './assets/styles/index.css';
 
-ReactDOM.render(<HolaMundo />, document.getElementById("app"));
+const root = ReactDOMClient.createRoot(document.getElementById("app"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
