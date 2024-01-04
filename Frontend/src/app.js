@@ -1,10 +1,13 @@
 import React from 'react';
-import UserPage from './pages/UserPage';
+import InDexDB from './Context/IndexDB';
+import UserPage from './pages/HomePage';
 
 export default function app() {
   return (
-    <div className='app'>
-      <UserPage />
-    </div>
+    <InDexDB>
+      <div className='app'>
+        <UserPage />
+      </div>
+    </InDexDB>
   )
 }

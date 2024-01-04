@@ -6,17 +6,20 @@ import Button from '@mui/material/Button';
 import '../../assets/styles/styles.css';
 
 const db = new Dexie('UserDatabase');
-db.version(1).stores({ users: '++id,name,firstname,lastname,email,password,puesto' });
+db.version(1).stores({ clients: '++id,nombre,calle,colonia,municipio,estado,cp,rfc,correo,telefono' });
 
-export default function UserRegister() {
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({
-    name: '',
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    puesto: '',
+export default function ClientRegister() {
+  const [clients, setClients] = useState([]);
+  const [client, setClient] = useState({
+    nombre: '',
+    calle: '',
+    colonia: '',
+    municipio: '',
+    estado: '',
+    cp: '',
+    rfc: '',
+    correo: '',
+    telefono: '',
   });
 
   useEffect(() => {
@@ -24,13 +27,13 @@ export default function UserRegister() {
   });
 
   const loadUsers = async () => {
-    const userList = await db.users.toArray();
-    setUsers(userList);
+    const clientList = await db.clients.toArray();
+    setUsers(clientList);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
+    setClient((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));
@@ -38,23 +41,26 @@ export default function UserRegister() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await db.users.add(user);
-    setUser({
-      name: '',
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      puesto: '',
+    await db.clients.add(user);
+    setClient({
+      nombre: '',
+      calle: '',
+      colonia: '',
+      municipio: '',
+      estado: '',
+      cp: '',
+      rfc: '',
+      correo: '',
+      telefono: '',
     });
     loadUsers();
-    console.log('Usuario Registrado');
+    console.log('Cliente Registrado');
   };
 
   return (
     <>
     <Box>
-      <div className='registerForm'>
+      <div className='userRegister'>
         <h2>Registrar Usuario</h2>
         <br />
         <form onSubmit={handleSubmit}>
@@ -64,10 +70,10 @@ export default function UserRegister() {
             fullWidth
             type='text' 
             name='name' 
-            value={user.name}
+            value={client.name}
             required 
             onChange={handleChange}
-            placeholder='Nombre'
+            placeholder='Nombre de la empresa'
           />
           <div className='spacing10' />
           <TextField  

@@ -5,7 +5,7 @@ import { InDexDB } from '../../Context/IndexDB';
 import Dexie from 'dexie';
 
 const db = new Dexie('UserDatabase');
-db.version(1).stores({ users: '++id,name,firstname,lastname,email,password,puesto' });
+db.version(1).stores({ instrumentos: '++id,name,marca,modelo,serialnumber,Maxalcance,Mindivision' });
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -29,7 +29,7 @@ const columns = [
   },
 ];
 
-export default function UserTable() {
+export default function InstruTable() {
   const example = useContext(InDexDB);
 
   useEffect(() => {
@@ -37,16 +37,16 @@ export default function UserTable() {
   });
 
   const loadUsers = async () => {
-    const userList = await db.users.toArray();
-    example.setUsers(userList);
+    const userList = await db.instrumentos.toArray();
+    example.setInstrus(userList);
   };
 
   return (
     <>
-      <h2>Lista de Usuarios</h2>
+      <h2>Lista de Instrumentos</h2>
         <Box sx={{ height: 400, width: '100%' }}>
           <DataGrid
-            rows={example.users}
+            rows={example.instrus}
             columns={columns}
             initialState={{
               pagination: {

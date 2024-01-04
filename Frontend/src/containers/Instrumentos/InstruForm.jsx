@@ -6,56 +6,56 @@ import Button from '@mui/material/Button';
 import '../../assets/styles/styles.css';
 
 const db = new Dexie('UserDatabase');
-db.version(1).stores({ users: '++id,name,firstname,lastname,email,password,puesto' });
+db.version(1).stores({ instrumentos: '++id,name,marca,modelo,serialnumber,Maxalcance,Mindivision' });
 
-export default function UserRegister() {
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({
+export default function InstruForm() {
+  const [instrus, setInstrus] = useState([]);
+  const [instru, setInstru] = useState({
     name: '',
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    puesto: '',
+    marca: '',
+    modelo: '',
+    serialNumber: '',
+    Maxalcance: '',
+    Mindivision: '',
   });
 
   useEffect(() => {
-    loadUsers();
+    loadInstruments();
   });
 
-  const loadUsers = async () => {
-    const userList = await db.users.toArray();
-    setUsers(userList);
+  const loadInstruments = async () => {
+    const userList = await db.instrumentos.toArray();
+    setInstrus(userList);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
+    setInstru((prevInstru) => ({
+      ...prevInstru,
       [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await db.users.add(user);
-    setUser({
+    await db.instrumentos.add(user);
+    setInstru({
       name: '',
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      puesto: '',
+      marca: '',
+      modelo: '',
+      serialNumber: '',
+      Maxalcance: '',
+      Mindivision: '',
     });
-    loadUsers();
+    loadInstruments();
     console.log('Usuario Registrado');
   };
 
   return (
     <>
-    <Box>
+      <Box>
       <div className='registerForm'>
-        <h2>Registrar Usuario</h2>
+        <h2>Registrar Instrumentos</h2>
         <br />
         <form onSubmit={handleSubmit}>
           <TextField  
@@ -64,10 +64,10 @@ export default function UserRegister() {
             fullWidth
             type='text' 
             name='name' 
-            value={user.name}
+            value={instru.name}
             required 
             onChange={handleChange}
-            placeholder='Nombre'
+            placeholder='Alias'
           />
           <div className='spacing10' />
           <TextField  
@@ -75,32 +75,32 @@ export default function UserRegister() {
             size="small"
             fullWidth
             type='text' 
-            name='firstname' 
-            value={user.firstname} 
+            name='marca' 
+            value={instru.marca} 
             onChange={handleChange}
-            placeholder='Apellido Paterno'  
+            placeholder='Marca'  
           />
           <div className='spacing10' />
           <TextField  
             variant="outlined" 
             size="small"
             fullWidth
-            name='lastname'
+            name='modelo'
             type='text' 
-            value={user.lastname} 
+            value={instru.modelo} 
             onChange={handleChange} 
-            placeholder='Apellido Materno'
+            placeholder='Modelo'
           />
           <div className='spacing10' />
           <TextField  
             variant="outlined" 
             size="small"
             fullWidth
-            type='email' 
-            name='email' 
-            value={user.email} 
+            type='text' 
+            name='serial number' 
+            value={instru.serialNumber} 
             onChange={handleChange}
-            placeholder='Correo'
+            placeholder='Número Serial'
           />
           <div className='spacing10' />
           <TextField  
@@ -108,34 +108,25 @@ export default function UserRegister() {
             size="small"
             fullWidth
             type='text'
-            name='puesto'
-            value={user.puesto}
+            name='Max Alcance'
+            value={instru.Maxalcance}
             onChange={handleChange}
-            placeholder='Puesto'
+            placeholder='Máximo Alcance'
           />
           <div className='spacing10' />
           <TextField  
             variant="outlined" 
             size="small"
             fullWidth
-            type='password'
-            name='password'
-            value={user.password}
+            type='text'
+            name='Min Division'
+            value={instru.Mindivision}
             onChange={handleChange} 
-            placeholder='Contraseña'
+            placeholder='División Minimo'
           />
-          {/*<br />
-          <br />
-          <label>Permisos:</label>
-          <select>
-            <option value='0'>Sin permisos</option>
-            <option value='1'>Empleado</option>
-            <option value='2'>Administrador</option>
-          </select>
-          */}
           <div className='spacing10' />
           <Button variant="contained" type='submit'>
-            Registrar Usuario
+            Registrar Instrumento
           </Button>
         </form>
       </div>
