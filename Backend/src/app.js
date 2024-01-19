@@ -1,6 +1,8 @@
 import express from "express";
 import morgan from "morgan";
-import router from "./routes/user.js";
+import userr from "./routes/user.js";
+import reporrt from "./routes/report.js";
+import emprresa from "./routes/empresa.js";
 import mongoose from "mongoose";
 
 const app = express();
@@ -14,7 +16,9 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
-//uses
-app.use("/user",router);
+//routes
+app.use("/user",userr);
+app.use("/report", reporrt);
+app.use("/empresa", emprresa);
 
 export default app;

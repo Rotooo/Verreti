@@ -1,4 +1,4 @@
-import mongoose,{ Schema}  from 'mongoose';
+import mongoose,{ Schema }  from 'mongoose';
 
 const userSchema = new Schema({
     nombre: String,
@@ -10,6 +10,6 @@ const userSchema = new Schema({
     permisos: Number
 })
 
-const user = mongoose.model('users', userSchema);
+const user = mongoose.model('usuarios', userSchema);
 
 export default user;

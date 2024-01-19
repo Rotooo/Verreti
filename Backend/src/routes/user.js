@@ -1,8 +1,6 @@
 import { Router } from "express";
 import user from "../models/user.js";
 
-const router = Router();
-
 const getUsers = (req, res) => {
     user.find()
     .then((data) => res.json(data))
@@ -34,10 +32,12 @@ const deleteUser = (req, res) => {
     .then(()=>{res.json("borrado exitoso")}).catch((error)=>{console.log(error)})
 };
 
+const router = Router();
+
 router.get('/users', getUsers)
 router.get('/users/:id', getUser);
 router.post('/users', createUser);
-router.update('/users/:id', updateUser);
+router.put('/users/:id', updateUser);
 router.delete('/users/:id', deleteUser);
 
 export default router;
