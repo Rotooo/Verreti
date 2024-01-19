@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import '../../assets/styles/styles.css';
 
 const db = new Dexie('UserDatabase');
-db.version(1).stores({ users: '++id,name,firstname,lastname,email,password,puesto' });
+db.version(2).stores({ users: '++id,name,firstname,lastname,email,password,puesto' });
 
 export default function UserRegister() {
   const [users, setUsers] = useState([]);

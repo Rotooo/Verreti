@@ -16,13 +16,22 @@
 
 .box-button{
     text-align: center;
+    width: 10vw;
+    height: auto;
     padding: 15px;
     margin: 10px;
     cursor: pointer;
-    border: 2px solid #e5e5e5;
+    border: 2px solid #f3f3f3;
     border-radius: 10px;
-    width: 10vw;
-    height: 10vh;
+}
+
+.box-button:hover{
+    background-color: #e5e5e5;
+    border: 2px solid #e5e5e5;
+}
+
+.box-button img{
+    width: 40%;
 }
 
 /*Espacios*/

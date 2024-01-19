@@ -11,7 +11,7 @@ export default function ButtonAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            Verreti
           </Typography>
         </Toolbar>
       </AppBar>

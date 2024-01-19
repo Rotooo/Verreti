@@ -11,14 +11,13 @@ export default function HomePage() {
         <Navbar />
       </header>
       <section className='baseSection'>
-        <center>
           <div className='menu'>
             <Grid container>
               {dashboardMenu.map((e) => {
                 return (
-                  <Grid item>
-                    <div className='box-button' key={e.id}>
-                      <img src={e.icon} width='30%' />
+                  <Grid item key={e.id}>
+                    <div className='box-button'>
+                      <img src={e.icon} />
                       <h3>{e.title}</h3>
                     </div>
                   </Grid>
@@ -26,7 +25,6 @@ export default function HomePage() {
               })}
             </Grid>
           </div>
-        </center>
       </section>
     </>
   )

@@ -1,6 +1,6 @@
 import React from 'react';
 import InDexDB from './Context/IndexDB';
-import UserPage from './pages/HomePage';
+import UserPage from './pages/ReportsSSIDPage';
 
 export default function app() {
   return (

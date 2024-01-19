@@ -6,55 +6,45 @@ import Button from '@mui/material/Button';
 import '../../assets/styles/styles.css';
 
 const db = new Dexie('UserDatabase');
-db.version(1).stores({ clients: '++id,nombre,calle,colonia,municipio,estado,cp,rfc,correo,telefono' });
+db.version(2).stores({ companies: '++id,name,calle,colonia,municipio,rfc,correo,cp,telefono,estado' });
 
 export default function ClientRegister() {
-  const [clients, setClients] = useState([]);
-  const [client, setClient] = useState({
-    nombre: '',
+  const [companyData, setCompanyData] = useState({
+    name: '',
     calle: '',
     colonia: '',
     municipio: '',
-    estado: '',
-    cp: '',
     rfc: '',
     correo: '',
+    cp: '',
     telefono: '',
+    estado: '',
   });
-
-  useEffect(() => {
-    loadUsers();
-  });
-
-  const loadUsers = async () => {
-    const clientList = await db.clients.toArray();
-    setUsers(clientList);
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setClient((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
+    setCompanyData({ ...companyData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await db.clients.add(user);
-    setClient({
-      nombre: '',
-      calle: '',
-      colonia: '',
-      municipio: '',
-      estado: '',
-      cp: '',
-      rfc: '',
-      correo: '',
-      telefono: '',
-    });
-    loadUsers();
-    console.log('Cliente Registrado');
+    try {
+      await db.companies.add(companyData);
+      alert('Datos de la empresa guardados con éxito');
+      setCompanyData({ 
+        name: '',
+        calle: '',
+        colonia: '',
+        municipio: '',
+        rfc: '',
+        correo: '',
+        cp: '',
+        telefono: '',
+        estado: '',
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -65,83 +55,106 @@ export default function ClientRegister() {
         <br />
         <form onSubmit={handleSubmit}>
           <TextField  
-            variant="outlined" 
-            size="small"
-            fullWidth
-            type='text' 
-            name='name' 
-            value={client.name}
-            required 
-            onChange={handleChange}
-            placeholder='Nombre de la empresa'
-          />
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='text' 
+              name='name' 
+              value={companyData.name}
+              onChange={handleChange}
+              placeholder='Nombre de la empresa'
+            />
           <div className='spacing10' />
           <TextField  
-            variant="outlined" 
-            size="small"
-            fullWidth
-            type='text' 
-            name='firstname' 
-            value={user.firstname} 
-            onChange={handleChange}
-            placeholder='Apellido Paterno'  
-          />
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='text' 
+              name='calle' 
+              value={companyData.calle}
+              onChange={handleChange}
+              placeholder='Calle'
+            />
           <div className='spacing10' />
           <TextField  
-            variant="outlined" 
-            size="small"
-            fullWidth
-            name='lastname'
-            type='text' 
-            value={user.lastname} 
-            onChange={handleChange} 
-            placeholder='Apellido Materno'
-          />
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='text' 
+              name='colonia' 
+              value={companyData.colonia}
+              onChange={handleChange}
+              placeholder='Colonia'
+            />
           <div className='spacing10' />
           <TextField  
-            variant="outlined" 
-            size="small"
-            fullWidth
-            type='email' 
-            name='email' 
-            value={user.email} 
-            onChange={handleChange}
-            placeholder='Correo'
-          />
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='text' 
+              name='municipio' 
+              value={companyData.municipio}
+              onChange={handleChange}
+              placeholder='Municipio'
+            />
           <div className='spacing10' />
           <TextField  
-            variant="outlined" 
-            size="small"
-            fullWidth
-            type='text'
-            name='puesto'
-            value={user.puesto}
-            onChange={handleChange}
-            placeholder='Puesto'
-          />
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='text' 
+              name='cp' 
+              value={companyData.cp}
+              onChange={handleChange}
+              placeholder='Código Postal'
+            />
           <div className='spacing10' />
           <TextField  
-            variant="outlined" 
-            size="small"
-            fullWidth
-            type='password'
-            name='password'
-            value={user.password}
-            onChange={handleChange} 
-            placeholder='Contraseña'
-          />
-          {/*<br />
-          <br />
-          <label>Permisos:</label>
-          <select>
-            <option value='0'>Sin permisos</option>
-            <option value='1'>Empleado</option>
-            <option value='2'>Administrador</option>
-          </select>
-          */}
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='text' 
+              name='estado' 
+              value={companyData.estado}
+              onChange={handleChange}
+              placeholder='Estado'
+            />
+          <div className='spacing10' />
+          <TextField  
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='text' 
+              name='rfc' 
+              value={companyData.rfc}
+              onChange={handleChange}
+              placeholder='RFC'
+            />
+          <div className='spacing10' />
+          <TextField  
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='email' 
+              name='correo' 
+              value={companyData.correo}
+              onChange={handleChange}
+              placeholder='Correo'
+            />
+          <div className='spacing10' />
+          <TextField  
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='text' 
+              name='telefono' 
+              value={companyData.telefono}
+              onChange={handleChange}
+              placeholder='Telefono'
+            />
           <div className='spacing10' />
           <Button variant="contained" type='submit'>
-            Registrar Usuario
+            Registrar Cliente
           </Button>
         </form>
       </div>
