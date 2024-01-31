@@ -5,7 +5,7 @@ const userSchema = new Schema({
     app: String,
     apm: String,
     correo: String,
-    contraseña: String,
+    password: String,
     puesto: String,
     permisos: Number
 })
