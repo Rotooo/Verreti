@@ -1,54 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import Dexie from 'dexie';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import '../../assets/styles/styles.css';
 
-const db = new Dexie('UserDatabase');
-db.version(2).stores({ users: '++id,name,firstname,lastname,email,password,puesto' });
-
 export default function UserRegister() {
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({
-    name: '',
-    firstname: '',
-    lastname: '',
-    email: '',
+  const [datos, setDatos] = useState({
+    nombre: '',
+    app: '',
+    apm: '',
+    correo: '',
     password: '',
     puesto: '',
+    permisos: 0,
   });
-
-  useEffect(() => {
-    loadUsers();
-  });
-
-  const loadUsers = async () => {
-    const userList = await db.users.toArray();
-    setUsers(userList);
-  };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
+    setDatos({
+      ...datos,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await db.users.add(user);
-    setUser({
-      name: '',
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      puesto: '',
-    });
-    loadUsers();
-    console.log('Usuario Registrado');
+  const sendUser = () => {
+    console.log('enviar')
   };
 
   return (
@@ -57,15 +32,13 @@ export default function UserRegister() {
       <div className='registerForm'>
         <h2>Registrar Usuario</h2>
         <br />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={sendUser}>
           <TextField  
             variant="outlined" 
             size="small"
             fullWidth
             type='text' 
             name='name' 
-            value={user.name}
-            required 
             onChange={handleChange}
             placeholder='Nombre'
           />
@@ -75,9 +48,8 @@ export default function UserRegister() {
             size="small"
             fullWidth
             type='text' 
-            name='firstname' 
-            value={user.firstname} 
-            onChange={handleChange}
+            name='firstname'
+            onChange={handleChange} 
             placeholder='Apellido Paterno'  
           />
           <div className='spacing10' />
@@ -87,8 +59,7 @@ export default function UserRegister() {
             fullWidth
             name='lastname'
             type='text' 
-            value={user.lastname} 
-            onChange={handleChange} 
+            onChange={handleChange}
             placeholder='Apellido Materno'
           />
           <div className='spacing10' />
@@ -98,7 +69,6 @@ export default function UserRegister() {
             fullWidth
             type='email' 
             name='email' 
-            value={user.email} 
             onChange={handleChange}
             placeholder='Correo'
           />
@@ -109,7 +79,6 @@ export default function UserRegister() {
             fullWidth
             type='text'
             name='puesto'
-            value={user.puesto}
             onChange={handleChange}
             placeholder='Puesto'
           />
@@ -119,9 +88,8 @@ export default function UserRegister() {
             size="small"
             fullWidth
             type='password'
-            name='password'
-            value={user.password}
-            onChange={handleChange} 
+            name='password' 
+            onChange={handleChange}
             placeholder='Contraseña'
           />
           {/*<br />

@@ -8,7 +8,7 @@ import mongoose from "mongoose";
 
 const app = express();
 
-mongoose.connect('mongodb+srv://user243:uMpCEIGxXvGm9iuh@verretidemo.i12evdn.mongodb.net/')
+mongoose.connect('mongodb+srv://user243:uMpCEIGxXvGm9iuh@verretidemo.i12evdn.mongodb.net/Verreti')
     .then((db)=>{console.log('db is connected')})
     .catch((error)=>{console.log(error, 'something went wrong')});
 
@@ -22,5 +22,13 @@ app.use("/user",userr);
 app.use("/report", reporrt);
 app.use("/empresa", emprresa);
 app.use("/instrumento", instrrument);
+
+//cors
+/*const corsOptions ={
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+};
+app.use(cors(corsOptions));*/
 
 export default app;

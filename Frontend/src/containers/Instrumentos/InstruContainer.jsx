@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import InstruForm from './InstruForm';
-import InstruTable from './InstruTable';
+//import InstruTable from './InstruTable';
 
 export default function InstruContainer() {
   return (
@@ -12,9 +12,9 @@ export default function InstruContainer() {
                 <Grid item xs={6}>
                     <InstruForm />
                 </Grid>
-                <Grid item xs={6}>
+                {/*<Grid item xs={6}>
                     <InstruTable />
-                </Grid>
+                </Grid>*/}
             </Grid>
         </Box>
     </>

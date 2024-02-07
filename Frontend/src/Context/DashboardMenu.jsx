@@ -9,6 +9,7 @@ export const dashboardMenu = [
         id: 1,
         title: 'Reportes SSIB',
         icon: reportIcon,
+        url: '/reportssid',
     },
     {
         id: 2,
@@ -19,16 +20,19 @@ export const dashboardMenu = [
         id: 3,
         title: 'Empresas',
         icon: companyIcon,
+        url: '/companies',
     },
     {
         id: 4,
         title: 'Instrumentos',
         icon: filterIcon,
+        url: '/instruments',
     },
     {
         id: 5,
         title: 'Usuarios',
         icon: userIcon,
+        url: '/users',
     },
     {
         id: 6,

@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import UserRegister from './UserRegister';
-import UserTable from './UserTable';
+//import UserTable from './UserTable';
 
 export default function UserContainer() {
   return (
@@ -12,9 +12,9 @@ export default function UserContainer() {
                 <Grid item xs={6}>
                     <UserRegister />
                 </Grid>
-                <Grid item xs={6}>
+                {/*<Grid item xs={6}>
                     <UserTable />
-                </Grid>
+                </Grid>*/}
             </Grid>
         </Box>
     </>

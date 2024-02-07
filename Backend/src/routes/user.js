@@ -3,7 +3,7 @@ import user from "../models/user.js";
 
 const getUsers = (req, res) => {
     user.find()
-    then((data) => res.json(data))
+    .then((data) => res.json(data))
     .catch((error)=>{console.log(error)})
 };
 
