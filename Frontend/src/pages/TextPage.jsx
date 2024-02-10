@@ -1,14 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 
 export default function TextPage() {
-    const loadUsers = () => {
-        fetch('http://localhost:2000/user/users')
-        .then(res => res.json())
-        .then(data => console.log(data))
-    };
+  const [datos, setDatos] = useState([]);
 
-    loadUsers();
+  useEffect(() => {
+    const getDataBackEnd = async () => {
+      try{
+        const request = await axios.get('http://localhost:2000/user/users');
+        setDatos(request.data);
+      } catch(error){
+        console.error(error);
+      }
+    };
+    getDataBackEnd();
+  }, []);
+
   return (
-    <div>TextPage</div>
+    <div>
+      <h1>Datos:</h1>
+      <ul>
+        {datos.map((dato, index) => (
+          <li key={index}>{dato.nombre}</li>
+        ))}
+      </ul>
+    </div>
   )
 }
