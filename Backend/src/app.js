@@ -14,6 +14,7 @@ mongoose.connect('mongodb+srv://user243:uMpCEIGxXvGm9iuh@verretidemo.i12evdn.mon
     .catch((error)=>{console.log(error, 'something went wrong')});
 
 //middlewares
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
