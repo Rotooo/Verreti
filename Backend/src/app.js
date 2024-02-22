@@ -5,6 +5,7 @@ import reporrt from "./routes/report.js";
 import emprresa from "./routes/empresa.js";
 import instrrument from "./routes/instrument.js";
 import mongoose from "mongoose";
+import cors from 'cors';
 
 const app = express();
 
@@ -26,9 +27,15 @@ app.use("/instrumento", instrrument);
 //cors
 /*const corsOptions ={
     origin:'*', 
-    credentials:true,            //access-control-allow-credentials:true
+    credentials:true,
     optionSuccessStatus:200,
 };
 app.use(cors(corsOptions));*/
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 export default app;

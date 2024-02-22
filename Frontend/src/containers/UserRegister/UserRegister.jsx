@@ -1,29 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import '../../assets/styles/styles.css';
+import {baseurl} from '../../Context/DashboardMenu';
+import axios from 'axios';
 
 export default function UserRegister() {
-  const [datos, setDatos] = useState({
+  const [usuario, setUsuario] = useState({
     nombre: '',
     app: '',
     apm: '',
     correo: '',
     password: '',
     puesto: '',
-    permisos: 0,
   });
 
   const handleChange = (e) => {
-    setDatos({
-      ...datos,
+    setUsuario({
+      ...usuario,
       [e.target.name]: e.target.value,
     });
   };
 
-  const sendUser = () => {
-    console.log('enviar')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Aquí deberías reemplazar la URL con la API real donde registrarás al usuario
+      const response = await axios.post('http://localhost:2000/user/users', usuario);
+      console.log('Usuario registrado con éxito:', response.data);
+    } catch (error) {
+      console.error('Error al registrar usuario:', error);
+    }
   };
 
   return (
@@ -32,35 +41,35 @@ export default function UserRegister() {
       <div className='registerForm'>
         <h2>Registrar Usuario</h2>
         <br />
-        <form onSubmit={sendUser}>
+        <form onSubmit={handleSubmit}>
           <TextField  
             variant="outlined" 
             size="small"
             fullWidth
             type='text' 
-            name='name' 
-            onChange={handleChange}
+            name='nombre' 
             placeholder='Nombre'
-          />
-          <div className='spacing10' />
-          <TextField  
-            variant="outlined" 
-            size="small"
-            fullWidth
-            type='text' 
-            name='firstname'
-            onChange={handleChange} 
-            placeholder='Apellido Paterno'  
-          />
-          <div className='spacing10' />
-          <TextField  
-            variant="outlined" 
-            size="small"
-            fullWidth
-            name='lastname'
-            type='text' 
             onChange={handleChange}
+          />
+          <div className='spacing10' />
+          <TextField  
+            variant="outlined" 
+            size="small"
+            fullWidth
+            type='text' 
+            name='app'
+            placeholder='Apellido Paterno'
+            onChange={handleChange}
+          />
+          <div className='spacing10' />
+          <TextField  
+            variant="outlined" 
+            size="small"
+            fullWidth
+            name='apm'
+            type='text' 
             placeholder='Apellido Materno'
+            onChange={handleChange}
           />
           <div className='spacing10' />
           <TextField  
@@ -68,9 +77,9 @@ export default function UserRegister() {
             size="small"
             fullWidth
             type='email' 
-            name='email' 
-            onChange={handleChange}
+            name='correo' 
             placeholder='Correo'
+            onChange={handleChange}
           />
           <div className='spacing10' />
           <TextField  
@@ -79,8 +88,8 @@ export default function UserRegister() {
             fullWidth
             type='text'
             name='puesto'
+            placeholder='Puesto' 
             onChange={handleChange}
-            placeholder='Puesto'
           />
           <div className='spacing10' />
           <TextField  
@@ -89,8 +98,8 @@ export default function UserRegister() {
             fullWidth
             type='password'
             name='password' 
-            onChange={handleChange}
             placeholder='Contraseña'
+            onChange={handleChange}
           />
           {/*<br />
           <br />

@@ -1,29 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import axios from "axios";
+import {baseurl} from '../Context/DashboardMenu';
 
 export default function TextPage() {
-  const [datos, setDatos] = useState([]);
+  //const baseurl = "http://localhost:2000/user/users";
+  const [post, setPost] = useState(null);
 
   useEffect(() => {
-    const getDataBackEnd = async () => {
-      try{
-        const request = await axios.get('http://localhost:2000/user/users');
-        setDatos(request.data);
-      } catch(error){
-        console.error(error);
-      }
-    };
-    getDataBackEnd();
+    axios.get(baseurl).then((response) => {
+      setPost(response.data);
+      console.log(response.data);
+    });
   }, []);
+
+  if(!post) return null;
 
   return (
     <div>
       <h1>Datos:</h1>
-      <ul>
-        {datos.map((dato, index) => (
-          <li key={index}>{dato.nombre}</li>
-        ))}
-      </ul>
+      <p>{post.nombre}</p>
     </div>
   )
 }

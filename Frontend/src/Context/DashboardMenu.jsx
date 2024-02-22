@@ -2,7 +2,7 @@ import reportIcon from '../assets/img/report.png';
 import companyIcon from '../assets/img/company.png';
 import filterIcon from '../assets/img/filter.png';
 import userIcon from '../assets/img/user.png';
-import settingIcon from '../assets/img/settings.png';
+//import settingIcon from '../assets/img/settings.png';
 
 export const dashboardMenu = [
     {
@@ -33,10 +33,7 @@ export const dashboardMenu = [
         title: 'Usuarios',
         icon: userIcon,
         url: '/users',
-    },
-    {
-        id: 6,
-        title: 'Configuración',
-        icon: settingIcon,
     }
 ];
+
+export const baseurl = "http://localhost:2000/user/users";
