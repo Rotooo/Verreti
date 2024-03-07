@@ -32,6 +32,22 @@ const deleteUser = (req, res) => {
     .then(()=>{res.json("borrado exitoso")}).catch((error)=>{console.log(error)})
 };
 
+const loginUser = (req, res) => {
+    const { correo, password } = req.body;
+    user.findOne({ correo: correo })
+    .then(user => {
+        if(user){
+            if(user.password === password){
+                res.json("Sucess")
+            } else {
+                res.json("Contraseña incorrecta")
+            }
+        }else{
+            res.json("No existe")
+        }
+    })
+};
+
 const router = Router();
 
 router.get('/users', getUsers)
@@ -39,5 +55,6 @@ router.get('/users/:id', getUser);
 router.post('/users', createUser);
 router.put('/users/:id', updateUser);
 router.delete('/users/:id', deleteUser);
+router.post('/login', loginUser);
 
 export default router;

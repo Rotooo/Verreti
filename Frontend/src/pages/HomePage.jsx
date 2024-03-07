@@ -1,6 +1,5 @@
 import React from 'react';
 import Navbar from '../components/navbar';
-import Grid from '@mui/material/Grid';
 import { dashboardMenu } from '../Context/DashboardMenu';
 import { Link } from 'react-router-dom';
 import '../assets/styles/styles.css';
@@ -12,21 +11,19 @@ export default function HomePage() {
         <Navbar />
       </header>
       <section className='baseSection'>
-          <div className='menu'>
-            <Grid container>
-              {dashboardMenu.map((e) => {
+          <div className='menurow'>
+            {dashboardMenu.map((e) => {
                 return (
-                  <Grid item key={e.id}>
+                  <div className='link-button' key={e.id}>
                     <Link to={e.url}>
-                      <div className='box-button'>
-                        <img src={e.icon} />
-                        <h3>{e.title}</h3>
+                      <div className='button-box'>
+                          <img src={e.icon}/>
+                          <h2>{e.title}</h2>
                       </div>
                     </Link>
-                  </Grid>
+                  </div>
                 )
               })}
-            </Grid>
           </div>
       </section>
     </>

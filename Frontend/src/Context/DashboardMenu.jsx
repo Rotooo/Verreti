@@ -36,4 +36,4 @@ export const dashboardMenu = [
     }
 ];
 
-export const baseurl = "http://localhost:2000/user/users";
+export const dajon = "https://verreti-server-production.up.railway.app";

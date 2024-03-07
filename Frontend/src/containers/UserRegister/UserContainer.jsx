@@ -1,21 +1,23 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import UserRegister from './UserRegister';
-//import UserTable from './UserTable';
+import UserTable from './UserTable';
+import ButtonBack from '../../components/BackButton';
+import '../../assets/styles/styles.css';
 
 export default function UserContainer() {
   return (
     <>
         <Box sx={{ width: '100%' }}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={6}>
+            <ButtonBack />
+            <div className='menurow2'>
+                <div className='item-cols'>
                     <UserRegister />
-                </Grid>
-                {/*<Grid item xs={6}>
+                </div>
+                <div className='item-cols'>
                     <UserTable />
-                </Grid>*/}
-            </Grid>
+                </div>
+            </div>
         </Box>
     </>
   )

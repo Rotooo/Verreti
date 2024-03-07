@@ -1,0 +1,26 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.table-title{
+    text-align: left;
+    height: 20vh;
+    width: auto;
+}
+
+.table-title p { color: #548DD4; font-size: 7px; }
+.table-title b{ color: #548DD4; font-size: 12px; }
+.table-title h4, h5 { color: #548DD4; }
+.table-title th{ padding: 2px; width: 0%; }
+
+.table-content tr, td {
+    border:1px solid #000;
+    width: auto;
+}
+
+.table-content{ border:1px solid #000; }
+
+.instru {
+    font-size: 9px;
+    text-align: left;
+}

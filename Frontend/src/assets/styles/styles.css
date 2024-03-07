@@ -1,18 +1,8 @@
-.registerForm{
-    width: 60%;
-}
-
-.userTable{
-    border: 1px solid #000;
-}
-
-.userTable td{
-    border: 1px solid #000;
-}
-
-.baseSection{
-    padding: 10px;
-}
+.registerForm{ width: 94%; }
+.userTable{ border: 1px solid #000; }
+.userTable td{ border: 1px solid #000;}
+.baseSection{ padding: 10px; }
+.box-button img{ width: 40%; }
 
 .box-button{
     text-align: center;
@@ -28,10 +18,6 @@
 .box-button:hover{
     background-color: #e5e5e5;
     border: 2px solid #e5e5e5;
-}
-
-.box-button img{
-    width: 40%;
 }
 
 /*Espacios*/
@@ -81,3 +67,31 @@
 .spacing200{ display: block; height: 200px; }
 .spacing100p{ display: block; height: 100%; }
 .spacing-auto{ display: block; height: auto; }
+
+.tableuser{border: 1px solid #000;}
+.tableuser td{border: 1px solid #000; padding: 1px;}
+.tableuser th{border: 1px solid #000; padding: 1px;}
+
+.link-button{
+    border: 1px solid #f3f3f3;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.link-button:hover{ background-color: #f3f3f3; }
+
+.button-box{ text-align: center; padding: 10px 0px; }
+.item-cols{ width: 100%; margin: 10px; }
+
+@media only screen and (min-width: 300px) {
+    .button-box img{ width: 20%; }
+    .button-box{ width: 100%; }
+    .menurow{ flex-direction: column; display: flex; }
+    .menurow2{ flex-direction: column; display: flex; }
+}
+
+@media only screen and (min-width: 900px) {
+    .button-box img{ width: 40%; }
+    .menurow{ flex-direction: row; display: flex; }
+    .menurow2{ flex-direction: row; display: flex; }
+}

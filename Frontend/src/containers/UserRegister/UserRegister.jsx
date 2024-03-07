@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import '../../assets/styles/styles.css';
-import {baseurl} from '../../Context/DashboardMenu';
 import axios from 'axios';
+import {dajon} from '../../Context/DashboardMenu';
+import '../../assets/styles/styles.css';
 
 export default function UserRegister() {
   const [usuario, setUsuario] = useState({
@@ -25,10 +25,8 @@ export default function UserRegister() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      // Aquí deberías reemplazar la URL con la API real donde registrarás al usuario
-      const response = await axios.post('http://localhost:2000/user/users', usuario);
+      const response = await axios.post(`${dajon}/user/users`, usuario);
       console.log('Usuario registrado con éxito:', response.data);
     } catch (error) {
       console.error('Error al registrar usuario:', error);
