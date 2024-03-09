@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom';
 import '../assets/styles/styles.css';
 
 export default function HomePage() {
+  const getX = localStorage.getItem('userSection')
   return (
     <>
       <header>
         <Navbar />
       </header>
       <section className='baseSection'>
+        <h3>Bienvenido {getX}</h3>
+        <div className='spacing15' />
           <div className='menurow'>
             {dashboardMenu.map((e) => {
                 return (

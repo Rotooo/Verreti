@@ -12,11 +12,6 @@ export const dashboardMenu = [
         url: '/reportssid',
     },
     {
-        id: 2,
-        title: 'Reportes DIB',
-        icon: reportIcon,
-    },
-    {
         id: 3,
         title: 'Empresas',
         icon: companyIcon,

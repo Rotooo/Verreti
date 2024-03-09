@@ -28,6 +28,7 @@ export default function UserRegister() {
     try {
       const response = await axios.post(`${dajon}/user/users`, usuario);
       console.log('Usuario registrado con éxito:', response.data);
+      window.location.reload();
     } catch (error) {
       console.error('Error al registrar usuario:', error);
     }

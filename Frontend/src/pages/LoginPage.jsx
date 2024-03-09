@@ -32,6 +32,7 @@ export default function SignIn() {
     axios.post(`${dajon}/user/login`, {correo, password})
     .then(result => {
       if(result.data === "Sucess"){
+        localStorage.setItem("userSection", correo);
         history('/home');
       } else {
         console.log("No tiene acceso");
@@ -46,7 +47,7 @@ export default function SignIn() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 15,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -54,7 +55,7 @@ export default function SignIn() {
         >
         <img src={AppIcon} width="30%" />
           <Typography component="h1" variant="h5">
-            Sign in
+            Iniciar Sesión
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField

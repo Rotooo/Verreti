@@ -3,6 +3,8 @@
 .userTable td{ border: 1px solid #000;}
 .baseSection{ padding: 10px; }
 .box-button img{ width: 40%; }
+.div-spacing-horizontal{ margin: 5px; }
+.info-text { color: #929292; }
 
 .box-button{
     text-align: center;

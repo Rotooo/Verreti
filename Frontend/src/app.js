@@ -9,6 +9,7 @@ import UsersPage from './pages/UserPage';
 import ReportPageT from './pages/ReportPage';
 import TestPage from './pages/TestPage';
 import LoginPage from './pages/LoginPage';
+import ErrorPage from './pages/ErrorPage';
 
 export default function app() {
   return (
@@ -23,6 +24,7 @@ export default function app() {
             <Route path='/users' element={<UsersPage />} />
             <Route path='/reportT' element={<ReportPageT />} />
             <Route path='/test' element={<TestPage />} />
+            <Route path='*' element={<ErrorPage />} />
           </Routes>
         </div>
     </InDexDB>

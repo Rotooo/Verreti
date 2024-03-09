@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../components/navbar';
+import Navbar from '../components/navbar2';
 import ClientContainer from '../containers/ClientsRegister/ClientContainer';
 import '../assets/styles/styles.css';
 

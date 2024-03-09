@@ -32,6 +32,7 @@ export default function ClientRegister() {
     try {
       const response = await axios.post(`${dajon}/empresa/empresas`, cliente);
       console.log('Usuario registrado con éxito:', response.data);
+      window.location.reload();
     } catch (error) {
       console.error('Error al registrar usuario:', error);
     }

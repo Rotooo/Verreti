@@ -3,19 +3,25 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { v4 as uuidv4 } from 'uuid';
 import {dajon} from '../../Context/DashboardMenu';
 import '../../assets/styles/styles.css';
 
 export default function InstruForm() {
+  const uniqueId = uuidv4();
   const [instru, setInstru] = useState({
-    codigo: '',
+    codigo: uniqueId,
     marca: '',
     modelo: '',
     tipo: '',
     alcance_max: 0,
     division_min: 0,
+    tipo_inspeccion: '',
     clase: '',
-    alias: '',
+    nombre: '',
+    numero: '',
   });
 
   const handleChange = (e) => {
@@ -30,6 +36,7 @@ export default function InstruForm() {
     try {
       const response = await axios.post(`${dajon}/instrumento/instruments`, instru);
       console.log('Usuario registrado con éxito:', response.data);
+      window.location.reload();
     } catch (error) {
       console.error('Error al registrar usuario:', error);
     }
@@ -47,9 +54,9 @@ export default function InstruForm() {
             size="small"
             fullWidth
             type='text' 
-            name='name'
+            name='nombre'
             required 
-            placeholder='Alias'
+            label="Nombre"
             onChange={handleChange}
           />
           <div className='spacing10' />
@@ -59,7 +66,17 @@ export default function InstruForm() {
             fullWidth
             type='text' 
             name='marca' 
-            placeholder='Marca'  
+            label='Marca'  
+            onChange={handleChange}
+          />
+          <div className='spacing10' />
+          <TextField  
+            variant="outlined" 
+            size="small"
+            fullWidth
+            type='text' 
+            name='numero' 
+            label='Número Serie'  
             onChange={handleChange}
           />
           <div className='spacing10' />
@@ -69,7 +86,7 @@ export default function InstruForm() {
             fullWidth
             name='modelo'
             type='text' 
-            placeholder='Modelo'
+            label='Modelo'
             onChange={handleChange}
           />
           <div className='spacing10' />
@@ -78,8 +95,8 @@ export default function InstruForm() {
             size="small"
             fullWidth
             type='text' 
-            name='serial number' 
-            placeholder='Número Serial'
+            name='tipo' 
+            label='Tipo'
             onChange={handleChange}
           />
           <div className='spacing10' />
@@ -88,8 +105,9 @@ export default function InstruForm() {
             size="small"
             fullWidth
             type='number'
-            name='Max Alcance'
-            placeholder='Máximo Alcance'
+            name='alcance_max'
+            label='Máximo Alcance'
+            onChange={handleChange}
           />
           <div className='spacing10' />
           <TextField  
@@ -97,9 +115,38 @@ export default function InstruForm() {
             size="small"
             fullWidth
             type='number'
-            name='Min Division'
-            placeholder='División Minimo'
+            name='division_min'
+            label='División Minimo'
+            onChange={handleChange}
           />
+          <div className='spacing10' />
+          <label className='info-text'>Clase de Exactitud</label>
+            <Select
+              id="demo-simple-select"
+              size="small"
+              fullWidth
+              name='clase'
+              onChange={handleChange}
+          >
+              <MenuItem value='III'>Media</MenuItem>
+              <MenuItem value='IIII'>Ordinaria</MenuItem>
+              <MenuItem value='II'>Fina</MenuItem>
+          </Select>
+          <div className='spacing10' />
+          <label className='info-text'>Tipo de Inspección</label>
+            <Select
+              id="demo-simple-select"
+              size="small"
+              fullWidth
+              name='tipo_inspeccion'
+              onChange={handleChange}
+          >
+              <MenuItem value='PA'>Periódica Anual</MenuItem>
+              <MenuItem value='P1S'>Periódica 1° Semestre</MenuItem>
+              <MenuItem value='P2S'>Periódica 2° Semestre</MenuItem>
+              <MenuItem value='I'>Inicial</MenuItem>
+              <MenuItem value='E'>Extraordinaria</MenuItem>
+          </Select>
           <div className='spacing10' />
           <Button variant="contained" type='submit'>
             Registrar Instrumento

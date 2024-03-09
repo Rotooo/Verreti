@@ -16,6 +16,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Slide from '@mui/material/Slide';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import { dajon } from '../../Context/DashboardMenu';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -23,24 +24,74 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function ReportesForm() {
-  const [opciones, setOpciones] = useState([]);
-  const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
-  const [infoInput1, setInfoInput1] = useState('');
-  const [infoInput2, setInfoInput2] = useState('');
-  const [infoInput3, setInfoInput3] = useState('');
+  let ins = [{
+    codigo: '',
+    marca: '',
+    modelo: '',
+    tipo: '',
+    alcance_max: 0,
+    division_min: 0,
+    clase: '',
+    tipo_inspeccion: '',
+    numero: 0,
+  }];
+  let inn = {
+    codigo: '',
+    marca: '',
+    modelo: '',
+    tipo: '',
+    alcance_max: 0,
+    division_min: 0,
+    clase: '',
+    tipo_inspeccion: '',
+    numero: 0,
+  };
+  const [personas, setPersonas] = useState([]);
+  const [instrumentos, setInstrumentos] = useState(ins);
+  const [selectedNombre, setSelectedNombre] = useState('');
+  const [selectedPersona, setSelectedPersona] = useState(null);
+  
+  const [instrus, setInstrus] = useState([]);
+  const [selectInstru, setSelectInstru] = useState('');
+  const [selectActuIn, setselectActuIn] = useState(null);
+
+  const unID = uuidv4();
   const [lat, setLatitud] = useState('');
   const [lon, setLongitud] = useState('');
-  const [latGeo, setGeoLatitud] = useState('');
-  const [lonGeo, setGeoLongitud] = useState('');
-  const [folio, setFolio] = useState('');
   const [open, setOpen] = useState(false);
   const DateAct = new Date();
   const fechaHoy = `${DateAct.getDate()}/${DateAct.getMonth() + 1}/${DateAct.getFullYear()}`;
+  const newFolio = Math.floor(1000000000 + Math.random() * 9000000000);
+  const [reporte, setReporte] = useState({
+    reporteid: '',
+    folio: '',
+    fecha: '',
+    longitud: '',
+    latitud: '',
+    giro: '',
+    nombre_empresa: '',
+    calle: '',
+    colonia: '',
+    municipio: '',
+    rfc: '',
+    correo: '',
+    cp: '',
+    telefono: '',
+    estado: '',
+  });
 
   useEffect(() => {
     axios.get(`${dajon}/empresa/empresas`)
       .then(response => {
-        setOpciones(response.data);
+        setPersonas(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener datos desde la API:', error);
+      });
+
+      axios.get(`${dajon}/instrumento/instruments`)
+      .then(response => {
+        setInstrus(response.data);
       })
       .catch(error => {
         console.error('Error al obtener datos desde la API:', error);
@@ -60,52 +111,70 @@ export default function ReportesForm() {
       }
   }, []);
 
-  const handleGetLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var latitud = position.coords.latitude;
-        var longitud = position.coords.longitude;
-        setGeoLatitud(latitud);
-        setGeoLongitud(longitud); 
-        console.log(`${latGeo}, ${lonGeo}`);   
-      }, function(error) {
-        console.error('Error al obtener la ubicación: ' + error.message);
-      });
-    } else {
-      console.error('Geolocalización no es compatible en este navegador');
-    }
-  };
-
   const handleSelectChange = (event) => {
-    const nuevaOpcion = event.target.value;
-    setOpcionSeleccionada(nuevaOpcion);
+    const nombreSeleccionado = event.target.value;
+    setSelectedNombre(nombreSeleccionado);
 
-    const opcionSeleccionadaData = opciones.find(opcion => opcion.opcion === nuevaOpcion);
-
-    if (opcionSeleccionadaData) {
-      setInfoInput1(opcionSeleccionadaData.infoInput1);
-      setInfoInput2(opcionSeleccionadaData.infoInput2);
-      setInfoInput3(opcionSeleccionadaData.infoInput3);
-    } else {
-      setInfoInput1('');
-      setInfoInput2('');
-      setInfoInput3('');
-    }
+    const personaSeleccionada = personas.find(persona => persona.nombre === nombreSeleccionado);
+    console.log(personaSeleccionada);
+    setSelectedPersona(personaSeleccionada);
   };
 
-  const generarFolio = () => {
-    const today = `${DateAct.getDate()}${DateAct.getMonth() + 1}${DateAct.getFullYear()}`;
-    const newFolio = Math.random().toString(36).substring(7).toUpperCase() + `${today}`;
-    setFolio(newFolio);
+  const handleSelectChangeInstru = (e) => {
+    const instruSeleecio = e.target.value;
+    setSelectInstru(instruSeleecio);
+
+    const acIntrusSelect = instrus.find(e => e.nombre === instruSeleecio);
+    setselectActuIn(acIntrusSelect);
+  };
+
+  const addInstrumento = () => {
+    setInstrumentos(instrumentos.concat(inn));
   };
 
   const handleClickOpen = () => {
     setOpen(true);
-    generarFolio();
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setReporte({
+      ...reporte,
+      reporteid: unID,
+      folio: newFolio,
+      fecha: fechaHoy,
+      longitud: lon,
+      latitud: lat,
+      [name]: value,
+      nombre_empresa: selectedPersona.nombre,
+      calle: selectedPersona.calle,
+      colonia: selectedPersona.colonia,
+      municipio: selectedPersona.municipio,
+      rfc: selectedPersona.rfc,
+      correo: selectedPersona.correo,
+      cp: selectedPersona.cp,
+      telefono: selectedPersona.telefono,
+      estado: selectedPersona.estado,
+      instrumentos: selectActuIn,
+    });
+    console.log(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    
+    console.log(reporte);
+    e.preventDefault();
+    try {
+      await axios.post(`${dajon}/report/reports`, reporte);
+
+      setOpen(false);
+    } catch (error) {
+      console.error('Error al registrar usuario:', error);
+    }
   };
 
   return (
@@ -132,12 +201,9 @@ export default function ReportesForm() {
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               Nuevo Reporte
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className='spacing10' />
               <Accordion defaultExpanded>
                 <AccordionSummary
@@ -156,8 +222,7 @@ export default function ReportesForm() {
                         label="Fecha"
                         fullWidth
                         type='text' 
-                        name='folio' 
-                        placeholder='Folio'
+                        name='fecha' 
                         value={fechaHoy}
                     />
                     </Grid>
@@ -165,12 +230,11 @@ export default function ReportesForm() {
                       <TextField  
                         variant="outlined" 
                         size="small"
-                        label="Folio"
+                        label="folio"
                         fullWidth
                         type='text' 
                         name='folio' 
-                        placeholder='Folio'
-                        value={folio}
+                        value={newFolio}
                     />
                     </Grid>
                     <Grid item>
@@ -181,8 +245,7 @@ export default function ReportesForm() {
                         fullWidth
                         type='text' 
                         name='latitud' 
-                        placeholder='latitud'
-                        value={lat || latGeo}
+                        value={lat}
                     />
                     </Grid>
                     <Grid item>
@@ -193,12 +256,8 @@ export default function ReportesForm() {
                         fullWidth
                         type='text' 
                         name='longitud'
-                        placeholder='Longitud'
-                        value={lon || lonGeo}
+                        value={lon}
                     />
-                    </Grid>
-                    <Grid item>
-                      <Button onClick={handleGetLocation}>Localización</Button>
                     </Grid>
                   </Grid>
                 </AccordionDetails>
@@ -213,107 +272,132 @@ export default function ReportesForm() {
                   Datos de la Empresa
                 </AccordionSummary>
                 <AccordionDetails>
+                  <label>Seleccionar Empresa</label>
                 <Select
-                      labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      label="Empresa"
                       size="small"
-                      autoWidth
-                      value={opcionSeleccionada} 
+                      value={selectedNombre}
                       onChange={handleSelectChange}
+                      fullWidth
                   >
-                    <MenuItem>Seleccionar</MenuItem>
-                    {opciones.map(opcion => (
-                      <MenuItem key={opcion.nombre} value={opcion.nombre}>{opcion.nombre}</MenuItem>
+                    {personas.map((e) => (
+                        <MenuItem key={e.id} value={e.nombre}>{e.nombre}</MenuItem>
                     ))}
                   </Select>
+                  
+                  <div className='spacing20' />
+                  {selectedPersona && (
+                    <>
+                      <TextField  
+                      variant="outlined" 
+                      size="small"
+                      fullWidth
+                      type='text' 
+                      name='nombre_empresa'
+                      label="Nombre de la empresa"
+                      readOnly
+                      value={selectedPersona.nombre}
+                      onChange={(e => {
+                        setReporte({
+                          ...reporte,
+                          nombre_empresa: e.target.value,
+                          
+                        });
+                        console.log(e.target.value);
+                      })}
+                    />
                   <div className='spacing10' />
                   <TextField  
-                  variant="outlined" 
-                  size="small"
-                  fullWidth
-                  type='text' 
-                  name='nombre'
-                  readOnly
-                  value={infoInput1}
-                  placeholder='Nombre de la empresa'
-                />
-              <div className='spacing10' />
-              <TextField  
-                  variant="outlined" 
-                  size="small"
-                  fullWidth
-                  type='text' 
-                  name='calle' 
-                  placeholder='Calle'
-                  value={infoInput2}
-                  readOnly
-                />
-              <div className='spacing10' />
-              <TextField  
-                  variant="outlined" 
-                  size="small"
-                  fullWidth
-                  type='text' 
-                  name='colonia' 
-                  placeholder='Colonia'
-                  value={infoInput3}
-                  readOnly
-                />
-              <div className='spacing10' />
-              <TextField  
-                  variant="outlined" 
-                  size="small"
-                  fullWidth
-                  type='text' 
-                  name='municipio' 
-                  placeholder='Municipio'
-                />
-              <div className='spacing10' />
-              <TextField  
-                  variant="outlined" 
-                  size="small"
-                  fullWidth
-                  type='text' 
-                  name='cp' 
-                  placeholder='Código Postal'
-                />
-              <div className='spacing10' />
-              <TextField  
-                  variant="outlined" 
-                  size="small"
-                  fullWidth
-                  type='text' 
-                  name='estado' 
-                  placeholder='Estado'
-                />
-              <div className='spacing10' />
-              <TextField  
-                  variant="outlined" 
-                  size="small"
-                  fullWidth
-                  type='text' 
-                  name='rfc' 
-                  placeholder='RFC'
-                />
-              <div className='spacing10' />
-              <TextField  
-                  variant="outlined" 
-                  size="small"
-                  fullWidth
-                  type='email' 
-                  name='correo' 
-                  placeholder='Correo'
-                />
-              <div className='spacing10' />
-              <TextField  
-                  variant="outlined" 
-                  size="small"
-                  fullWidth
-                  type='text' 
-                  name='telefono' 
-                  placeholder='Telefono'
-                />
+                      variant="outlined" 
+                      size="small"
+                      fullWidth
+                      type='text' 
+                      name='calle' 
+                      label="Calle"
+                      value={selectedPersona.calle}
+                      readOnly
+                      onChange={handleChange}
+                    />
+                  <div className='spacing10' />
+                  <TextField  
+                      variant="outlined" 
+                      size="small"
+                      fullWidth
+                      type='text' 
+                      name='colonia' 
+                      label="Colonia"
+                      value={selectedPersona.colonia}
+                      readOnly
+                      onChange={handleChange}
+                    />
+                  <div className='spacing10' />
+                  <TextField  
+                      variant="outlined" 
+                      size="small"
+                      fullWidth
+                      type='text' 
+                      name='municipio' 
+                      label="Municipio"
+                      value={selectedPersona.municipio}
+                      onChange={handleChange}
+                    />
+                  <div className='spacing10' />
+                  <TextField  
+                      variant="outlined" 
+                      size="small"
+                      fullWidth
+                      type='text' 
+                      name='cp' 
+                      label="Código Postal"
+                      value={selectedPersona.cp}
+                      onChange={handleChange}
+                    />
+                  <div className='spacing10' />
+                  <TextField  
+                      variant="outlined" 
+                      size="small"
+                      fullWidth
+                      type='text' 
+                      name='estado' 
+                      label="Estado"
+                      value={selectedPersona.estado}
+                      onChange={handleChange}
+                    />
+                  <div className='spacing10' />
+                  <TextField  
+                      variant="outlined" 
+                      size="small"
+                      fullWidth
+                      type='text' 
+                      name='rfc' 
+                      label="RFC"
+                      value={selectedPersona.rfc}
+                      onChange={handleChange}
+                    />
+                  <div className='spacing10' />
+                  <TextField  
+                      variant="outlined" 
+                      size="small"
+                      fullWidth
+                      type='email' 
+                      name='correo' 
+                      label="Correo"
+                      value={selectedPersona.correo}
+                      onChange={handleChange}
+                    />
+                  <div className='spacing10' />
+                  <TextField  
+                      variant="outlined" 
+                      size="small"
+                      fullWidth
+                      type='text' 
+                      name='telefono' 
+                      label="Telefono"
+                      value={selectedPersona.telefono}
+                      onChange={handleChange}
+                    />
+                    </>
+                )}
               <div className='spacing10' />
                 </AccordionDetails>
               </Accordion>
@@ -323,15 +407,78 @@ export default function ReportesForm() {
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel3-content"
                   id="panel3-header"
+                  onClick={(e)=>{console.log(instrumentos)}}
                 >
                   Instrumentos
                 </AccordionSummary>
                 <AccordionDetails>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                  malesuada lacus ex, sit amet blandit leo lobortis eget.
+                <table>
+                  <thead>
+                      <tr>
+                          <th>Instrumento</th>
+                          <th>MARCA</th>
+                          <th>MODELO</th>
+                          <th>NUMERO DE SERIE</th>
+                          <th>TIPO DE INSTRUMENTO</th>
+                          <th>ALCANCE MAXIMO (Kg)</th>
+                          <th>DIVISION MINIMA (g)</th>
+                          <th>CLASE DE EXACTITUD</th>
+                          <th>TIPO DE INSPECCION</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {instrumentos.map((element) => {
+                        return(
+                          <tr>
+                          <th>
+                            <Select
+                              id="demo-simple-select"
+                              label="Empresa"
+                              size="small"
+                              value={selectInstru}
+                              onChange={handleSelectChangeInstru}
+                              fullWidth
+                                  >
+                                    {instrus.map((e) => (
+                                        <MenuItem key={e.id} value={e.nombre}>{e.nombre}</MenuItem>
+                                    ))}
+                          </Select>
+                          </th>
+                          {selectActuIn && (
+                            <>
+                              <td value={element.marca}>{selectActuIn.marca}</td>
+                              <td value={element.modelo}>{selectActuIn.modelo}</td>
+                              <td value={element.numero}>{selectActuIn.numero}</td>
+                              <td value={element.tipo}>{selectActuIn.tipo}</td>
+                              <td value={element.alcance_max}>{selectActuIn.alcance_max}</td>
+                              <td value={element.division_min}>{selectActuIn.division_min}</td>
+                              <td value={element.clase}>{selectActuIn.clase}</td>
+                              <td value={element.tipo_inspeccion}>{selectActuIn.tipo_inspeccion}</td>
+                            </>
+                          )}
+                        </tr>
+                        )
+                        
+                      })}                      
+                  </tbody>
+                <button onClick={()=>{addInstrumento()}}>Agregar</button>
+              </table>
                 </AccordionDetails>
               </Accordion>
+              <div className='spacing10' />
+              <TextField  
+                        variant="outlined" 
+                        size="small"
+                        label="Giro"
+                        fullWidth
+                        type='text' 
+                        name='giro' 
+                        onChange={handleChange}
+                    />
           <div className='spacing10' />
+          <Button autoFocus color="inherit" type='submit' onClick={handleClose}>
+              save
+            </Button>
         </form>
       </Dialog>
     </React.Fragment>

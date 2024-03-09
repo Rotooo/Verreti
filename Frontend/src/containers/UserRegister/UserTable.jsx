@@ -6,6 +6,8 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
   { field: 'nombre', headerName: 'Nombre', width: 150 },
+  { field: 'app', headerName: 'Apellido Paterno', width: 150 },
+  { field: 'apm', headerName: 'Apellido Materno', width: 150 },
   { field: 'correo', headerName: 'Last name', width: 150 },
   { field: 'puesto', headerName: 'Puesto', width: 110 },
 ];
@@ -34,7 +36,7 @@ export default function UserTable() {
             },
           },
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[5, 10, 25]}
       />
     </Box>
   )

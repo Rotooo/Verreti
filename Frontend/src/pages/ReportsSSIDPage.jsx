@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../components/navbar';
+import Navbar from '../components/navbar2';
 import ReportSSIDContainer from '../containers/ReportesSSID/ReportesContainer';
 import '../assets/styles/styles.css';
 
