@@ -7,21 +7,21 @@ import userIcon from '../assets/img/user.png';
 export const dashboardMenu = [
     {
         id: 1,
-        title: 'Reportes SSIB',
-        icon: reportIcon,
-        url: '/reportssid',
+        title: 'Instrumentos',
+        icon: filterIcon,
+        url: '/instruments',
     },
     {
-        id: 3,
+        id: 2,
         title: 'Empresas',
         icon: companyIcon,
         url: '/companies',
     },
     {
-        id: 4,
-        title: 'Instrumentos',
-        icon: filterIcon,
-        url: '/instruments',
+        id: 3,
+        title: 'Reportes SSIB',
+        icon: reportIcon,
+        url: '/reportssid',
     },
     {
         id: 5,

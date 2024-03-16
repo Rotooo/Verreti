@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -19,8 +19,6 @@ import {
   randomId,
   randomArrayItem,
 } from '@mui/x-data-grid-generator';
-import { dajon } from '../../Context/DashboardMenu';
-import axios from 'axios';
 
 const roles = ['Market', 'Finance', 'Development'];
 const randomRole = () => {
@@ -67,37 +65,11 @@ const initialRows = [
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
-
-  const handleClick = () => {
-    const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-    }));
-  };
-
-  return (
-    <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
-      </Button>
-    </GridToolbarContainer>
-  );
 }
 
 export default function FullFeaturedCrudGrid() {
-  const [rows, setRows] = useState(initialRows);
-  const [post, setPost] = useState([]);
-  const [rowModesModel, setRowModesModel] = useState({});
-
-  useEffect(() => {
-    axios.get(`${dajon}/user/users`).then((response) => {
-      setPost(response.data);
-    });
-  }, []);
-
-  if(!post) return null;
+  const [rows, setRows] = React.useState(initialRows);
+  const [rowModesModel, setRowModesModel] = React.useState({});
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -114,7 +86,7 @@ export default function FullFeaturedCrudGrid() {
   };
 
   const handleDeleteClick = (id) => () => {
-    setPost(post.filter((row) => row.id !== id));
+    setRows(rows.filter((row) => row.id !== id));
   };
 
   const handleCancelClick = (id) => () => {
@@ -123,15 +95,15 @@ export default function FullFeaturedCrudGrid() {
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
 
-    const editedRow = post.find((row) => row.id === id);
+    const editedRow = rows.find((row) => row.id === id);
     if (editedRow.isNew) {
-        setPost(post.filter((row) => row.id !== id));
+      setRows(rows.filter((row) => row.id !== id));
     }
   };
 
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
-    setPost(post.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
 
@@ -140,7 +112,12 @@ export default function FullFeaturedCrudGrid() {
   };
 
   const columns = [
-    { field: 'name', headerName: 'Name', width: 180, editable: true },
+    { 
+      field: 'nombre', 
+      headerName: 'Nombre', 
+      width: 150, 
+      editable: false 
+    },
     {
       field: 'age',
       headerName: 'Age',
@@ -148,20 +125,20 @@ export default function FullFeaturedCrudGrid() {
       width: 80,
       align: 'left',
       headerAlign: 'left',
-      editable: true,
+      editable: false,
     },
     {
       field: 'joinDate',
       headerName: 'Join date',
       type: 'date',
       width: 180,
-      editable: true,
+      editable: false,
     },
     {
       field: 'role',
       headerName: 'Department',
       width: 220,
-      editable: true,
+      editable: false,
       type: 'singleSelect',
       valueOptions: ['Market', 'Finance', 'Development'],
     },
@@ -227,7 +204,7 @@ export default function FullFeaturedCrudGrid() {
       }}
     >
       <DataGrid
-        rows={post}
+        rows={rows}
         columns={columns}
         editMode="row"
         rowModesModel={rowModesModel}

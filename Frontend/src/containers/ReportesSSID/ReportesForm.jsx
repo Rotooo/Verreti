@@ -34,6 +34,7 @@ export default function ReportesForm() {
     clase: '',
     tipo_inspeccion: '',
     numero: 0,
+    nombre:'',
   }];
   let inn = {
     codigo: '',
@@ -45,6 +46,7 @@ export default function ReportesForm() {
     clase: '',
     tipo_inspeccion: '',
     numero: 0,
+    nombre: '',
   };
   const [personas, setPersonas] = useState([]);
   const [instrumentos, setInstrumentos] = useState(ins);
@@ -120,13 +122,46 @@ export default function ReportesForm() {
     setSelectedPersona(personaSeleccionada);
   };
 
-  const handleSelectChangeInstru = (e) => {
-    const instruSeleecio = e.target.value;
-    setSelectInstru(instruSeleecio);
-
+  const handleSelectChangeInstru = (e, indx) => {
+    /*const instruSeleecio = e.target.value;
     const acIntrusSelect = instrus.find(e => e.nombre === instruSeleecio);
     setselectActuIn(acIntrusSelect);
+    const newinstrus = [...instrumentos];
+    const newinstru = newinstrus[indx];
+    newinstru=acIntrusSelect;
+    setInstrumentos(newinstrus);*/
+    const instruSeleecio = e.target.value;
+    const acIntrusSelect = instrus.find(e => e.nombre === instruSeleecio);
+    setselectActuIn(acIntrusSelect);
+    console.log(acIntrusSelect, 'tumadre');
+    const newinstrus = instrumentos.map((c, i) => {
+      if (i === indx) {
+        // Incrementa el contador de clics
+        return c = acIntrusSelect;
+      } else {
+        // El resto no ha cambiado
+        return c;
+      }
+    });
+    console.log(newinstrus);
+    setInstrumentos(newinstrus);
   };
+
+  /*function handleIncrementClick(e, index) {
+    const instruSeleecio = e.target.value;
+    const acIntrusSelect = instrus.find(e => e.nombre === instruSeleecio);
+    setselectActuIn(acIntrusSelect);
+    const newinstrus = instrus.map((c, i) => {
+      if (i === index) {
+        // Incrementa el contador de clics
+        return c= acIntrusSelect;
+      } else {
+        // El resto no ha cambiado
+        return c;
+      }
+    });
+    setInstrumentos(newinstrus);
+  }*/
 
   const addInstrumento = () => {
     setInstrumentos(instrumentos.concat(inn));
@@ -141,7 +176,6 @@ export default function ReportesForm() {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
     setReporte({
       ...reporte,
       reporteid: unID,
@@ -149,7 +183,7 @@ export default function ReportesForm() {
       fecha: fechaHoy,
       longitud: lon,
       latitud: lat,
-      [name]: value,
+      giro: e.target.value,
       nombre_empresa: selectedPersona.nombre,
       calle: selectedPersona.calle,
       colonia: selectedPersona.colonia,
@@ -159,18 +193,15 @@ export default function ReportesForm() {
       cp: selectedPersona.cp,
       telefono: selectedPersona.telefono,
       estado: selectedPersona.estado,
-      instrumentos: selectActuIn,
+      instrumentos: instrumentos,
     });
     console.log(e.target.value);
   };
 
   const handleSubmit = async (e) => {
-    
-    console.log(reporte);
     e.preventDefault();
     try {
       await axios.post(`${dajon}/report/reports`, reporte);
-
       setOpen(false);
     } catch (error) {
       console.error('Error al registrar usuario:', error);
@@ -427,7 +458,7 @@ export default function ReportesForm() {
                       </tr>
                   </thead>
                   <tbody>
-                      {instrumentos.map((element) => {
+                      {instrumentos.map((element, indi) => {
                         return(
                           <tr>
                           <th>
@@ -435,10 +466,11 @@ export default function ReportesForm() {
                               id="demo-simple-select"
                               label="Empresa"
                               size="small"
-                              value={selectInstru}
-                              onChange={handleSelectChangeInstru}
+                              value={element.nombre}
+                              onChange={(e)=>{handleSelectChangeInstru(e, indi)}}
                               fullWidth
                                   >
+                                  
                                     {instrus.map((e) => (
                                         <MenuItem key={e.id} value={e.nombre}>{e.nombre}</MenuItem>
                                     ))}
@@ -446,23 +478,28 @@ export default function ReportesForm() {
                           </th>
                           {selectActuIn && (
                             <>
-                              <td value={element.marca}>{selectActuIn.marca}</td>
-                              <td value={element.modelo}>{selectActuIn.modelo}</td>
-                              <td value={element.numero}>{selectActuIn.numero}</td>
-                              <td value={element.tipo}>{selectActuIn.tipo}</td>
-                              <td value={element.alcance_max}>{selectActuIn.alcance_max}</td>
-                              <td value={element.division_min}>{selectActuIn.division_min}</td>
-                              <td value={element.clase}>{selectActuIn.clase}</td>
-                              <td value={element.tipo_inspeccion}>{selectActuIn.tipo_inspeccion}</td>
+                              <td value={element.marca}>{element.marca}</td>
+                              <td value={element.modelo}>{element.modelo}</td>
+                              <td value={element.numero}>{element.numero}</td>
+                              <td value={element.tipo}>{element.tipo}</td>
+                              <td value={element.alcance_max}>{element.alcance_max}</td>
+                              <td value={element.division_min}>{element.division_min}</td>
+                              <td value={element.clase}>{element.clase}</td>
+                              <td value={element.tipo_inspeccion}>{element.tipo_inspeccion}</td>
                             </>
                           )}
                         </tr>
                         )
                         
                       })}                      
-                  </tbody>
-                <button onClick={()=>{addInstrumento()}}>Agregar</button>
+                  </tbody>             
               </table>
+              <button onClick={(e)=>{
+                addInstrumento()
+                e.preventDefault()                
+                }}>
+                  Agregar
+              </button>
                 </AccordionDetails>
               </Accordion>
               <div className='spacing10' />
@@ -478,7 +515,7 @@ export default function ReportesForm() {
           <div className='spacing10' />
           <Button autoFocus color="inherit" type='submit' onClick={handleClose}>
               save
-            </Button>
+          </Button>
         </form>
       </Dialog>
     </React.Fragment>

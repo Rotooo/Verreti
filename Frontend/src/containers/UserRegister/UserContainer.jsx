@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import UserRegister from './UserRegister';
-import UserTable from './UserTable';
+import UserTable from './UserTable2';
 import '../../assets/styles/styles.css';
 
 export default function UserContainer() {

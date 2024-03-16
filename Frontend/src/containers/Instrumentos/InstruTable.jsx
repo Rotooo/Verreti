@@ -45,6 +45,8 @@ export default function UserTable() {
       <i className='info-text'>*Clase de Exactitud: Media= III, Ordinaria= IIII Fina= II.</i>
       <br />
       <i className='info-text'>*Tipo de Inspección: PA= Periódica Anual , P1S= Periódica 1° Semestre, P2S= Periódica 2° Semestre, I= Inicial, E=Extraordinaria</i>
+      <br />
+      <i className='info-text'>*Tipo de Instrumento: E= Electrónico, M= Mecánico, H= Hibrido o Electromecánico, MI= Multi-Intervalo, R=De Relación C= Cucharon y/o Colgante.     </i>
     </Box>
   )
 }

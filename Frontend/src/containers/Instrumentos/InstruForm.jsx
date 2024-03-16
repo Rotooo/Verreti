@@ -16,8 +16,8 @@ export default function InstruForm() {
     marca: '',
     modelo: '',
     tipo: '',
-    alcance_max: 0,
-    division_min: 0,
+    alcance_max: '',
+    division_min: '',
     tipo_inspeccion: '',
     clase: '',
     nombre: '',
@@ -36,7 +36,6 @@ export default function InstruForm() {
     try {
       const response = await axios.post(`${dajon}/instrumento/instruments`, instru);
       console.log('Usuario registrado con éxito:', response.data);
-      window.location.reload();
     } catch (error) {
       console.error('Error al registrar usuario:', error);
     }
@@ -90,21 +89,27 @@ export default function InstruForm() {
             onChange={handleChange}
           />
           <div className='spacing10' />
-          <TextField  
-            variant="outlined" 
-            size="small"
-            fullWidth
-            type='text' 
-            name='tipo' 
-            label='Tipo'
-            onChange={handleChange}
-          />
+          <label className='info-text'>Tipo de instrumento</label>
+          <Select
+              id="demo-simple-select"
+              size="small"
+              fullWidth
+              name='tipo'
+              onChange={handleChange}
+          >
+              <MenuItem value='E'>Electrónico</MenuItem>
+              <MenuItem value='M'>Mecánico</MenuItem>
+              <MenuItem value='H'>Hibrido o Electromecánico</MenuItem>
+              <MenuItem value='MI'>Multi-Intervalo</MenuItem>
+              <MenuItem value='R'>De Relación</MenuItem>
+              <MenuItem value='C'>Cucharon y/o Colgante</MenuItem>
+          </Select>
           <div className='spacing10' />
           <TextField  
             variant="outlined" 
             size="small"
             fullWidth
-            type='number'
+            type='text'
             name='alcance_max'
             label='Máximo Alcance'
             onChange={handleChange}
@@ -114,7 +119,7 @@ export default function InstruForm() {
             variant="outlined" 
             size="small"
             fullWidth
-            type='number'
+            type='text'
             name='division_min'
             label='División Minimo'
             onChange={handleChange}
