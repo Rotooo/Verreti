@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import Box from '@mui/material/Box';
+import React, {useState} from 'react'; 
+import Box from '@mui/material/Box'; 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
@@ -22,6 +22,7 @@ export default function InstruForm() {
     clase: '',
     nombre: '',
     numero: '',
+    aprovacion: '',
   });
 
   const handleChange = (e) => {
@@ -152,6 +153,16 @@ export default function InstruForm() {
               <MenuItem value='I'>Inicial</MenuItem>
               <MenuItem value='E'>Extraordinaria</MenuItem>
           </Select>
+          <div className='spacing10' />
+          <TextField  
+            variant="outlined" 
+            size="small"
+            fullWidth
+            type='text'
+            name='aprovacion'
+            label='Aprovación Modelo Prototipo (DGN)'
+            onChange={handleChange}
+          />
           <div className='spacing10' />
           <Button variant="contained" type='submit'>
             Registrar Instrumento

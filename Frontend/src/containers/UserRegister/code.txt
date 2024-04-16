@@ -1,0 +1,40 @@
+import React from 'react';
+import { flags } from '../../services/xconfig.jsx';
+import { ProgressBar } from '../../components/ProgressBar';
+
+export default function LangPanel() {
+    return (
+        <>
+            {flags.map((e) => {
+                return(
+                    <>
+                        <div className="spacing10" />
+                        <div className="cart" key={e.id}>
+                            <div className="divicon">
+                                <img src={e.icon} color={e.color} />
+                            </div>
+                            <ProgressBar title={e.title} size={e.porcent} color={e.color} />
+                        </div>
+                    </>
+                );
+            })}
+        </>
+    )
+}
+
+=================================================================================================
+
+import React from 'react';
+import '../assets/styles/components.css';
+
+export const ProgressBar = ({size, color, title}) => {
+  return(
+    <div className="progress-bar">
+      <label>{title}</label>
+      <p>{size}</p>
+      <div className="progress">
+        <hr className="barr" width={size} color={color} />
+      </div>
+    </div>
+  );
+};

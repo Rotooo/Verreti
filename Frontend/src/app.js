@@ -10,11 +10,24 @@ import ReportPageT from './pages/ReportPage';
 import TestPage from './pages/TestPage';
 import LoginPage from './pages/LoginPage';
 import ErrorPage from './pages/ErrorPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function app() {
   return (
     <InDexDB>
         <div className='app'>
+        <ToastContainer
+            position="bottom-center"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           <Routes>
             <Route path='/' element={<LoginPage />} />
             <Route path='/home' element={<HomePage />} />

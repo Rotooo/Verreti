@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { dajon } from '../Context/DashboardMenu';
 import AppIcon from '../assets/img/verreti-icon.png';
 
@@ -29,12 +30,31 @@ export default function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    //const response = axios.get(`${dajon}/user/users/${id}`);
     axios.post(`${dajon}/user/login`, {correo, password})
     .then(result => {
       if(result.data === "Sucess"){
         localStorage.setItem("userSection", correo);
+        toast.success(`Bienvenido ${correo}`, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         history('/home');
       } else {
+        toast.error('Usuario o Contraseña Incorrectos', {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         console.log("No tiene acceso");
       }
     })

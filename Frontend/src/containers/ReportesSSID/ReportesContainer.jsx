@@ -1,6 +1,6 @@
 import React from 'react';
 import ReportForm from './ReportesForm';
-import ReportesTable from './ReportesTable';
+import ReportesTable from './ReportTable';
 import '../../assets/styles/styles.css';
 
 export default function ReportesContainer() {

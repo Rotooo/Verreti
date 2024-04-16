@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import axios from 'axios';
-import Dialog from './UserDetails';
 import { dajon } from '../../Context/DashboardMenu';
 import {
   GridRowModes,
@@ -17,7 +16,6 @@ import {
   randomId,
   randomArrayItem,
 } from '@mui/x-data-grid-generator';
-import { UserDialog } from './UserDialog';
 
 const roles = ['Market', 'Finance', 'Development'];3
 const randomRole = () => {
@@ -83,21 +81,12 @@ export default function FullFeaturedCrudGrid() {
   };
 
   useEffect(() => {
-    axios.get(`${dajon}/user/users`).then((response) => {
+    axios.get(`${dajon}/report/reports`).then((response) => {
       setPost(response.data);
     });
   }, []);
 
   if(!post) return null;
-
-  const eliminarDato = async (id) => {
-    try {
-      await axios.delete(`${dajon}/user/users/${id}`);
-      setPost(post.filter((dato) => dato._id !== id));
-    } catch (error) {
-      console.error('Error al eliminar el dato:', error);
-    }
-  };
 
   const handleDeleteClick = (id) => () => {
     setRows(rows.filter((row) => row.id !== id));
@@ -115,28 +104,23 @@ export default function FullFeaturedCrudGrid() {
 
   const columns = [
     { 
-      field: 'nombre', 
-      headerName: 'Nombre', 
+      field: 'reporteid', 
+      headerName: 'ID', 
       width: 150, 
     },
     {
-      field: 'app',
-      headerName: 'Apellido Paterno',
+      field: 'fecha',
+      headerName: 'Fecha',
       width: 150,
     },
     {
-      field: 'apm',
-      headerName: 'Apellido Materno',
+      field: 'folio',
+      headerName: 'Folio',
       width: 150,
     },
     {
-      field: 'correo',
-      headerName: 'Apellido Materno',
-      width: 150,
-    },
-    {
-      field: 'puesto',
-      headerName: 'Puesto',
+      field: 'nombre_empresa',
+      headerName: 'Empresa',
       width: 150,
     },
     {
@@ -147,15 +131,10 @@ export default function FullFeaturedCrudGrid() {
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
-          <UserDialog 
-            nombre={id.nombre}
-            app={id.app}
-            apm={id.apm}
-          />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={() => eliminarDato(id)}
+            onClick={handleDeleteClick(id)}
             color="error"
           />,
         ];
@@ -166,7 +145,7 @@ export default function FullFeaturedCrudGrid() {
   return (
     <Box
       sx={{
-        height: 500,
+        height: '100%',
         width: '100%',
         '& .actions': {
           color: 'text.secondary',

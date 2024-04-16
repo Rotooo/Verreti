@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import {dajon} from '../../Context/DashboardMenu';
 import '../../assets/styles/styles.css';
+import TextField from '@mui/material/TextField';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
 
 export default function UserRegister() {
   const [usuario, setUsuario] = useState({
@@ -14,6 +21,8 @@ export default function UserRegister() {
     correo: '',
     password: '',
     puesto: '',
+    vehiculo: '',
+    equipo: '',
   });
 
   const handleChange = (e) => {
@@ -27,7 +36,16 @@ export default function UserRegister() {
     e.preventDefault();
     try {
       const response = await axios.post(`${dajon}/user/users`, usuario);
-      console.log('Usuario registrado con éxito:', response.data);
+      toast.success('Usuario registrado con éxito', {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      console.log(response.data);
     } catch (error) {
       console.error('Error al registrar usuario:', error);
     }
@@ -80,18 +98,21 @@ export default function UserRegister() {
             onChange={handleChange}
           />
           <div className='spacing10' />
-          <TextField  
-            variant="outlined" 
-            size="small"
-            fullWidth
-            type='text'
-            name='puesto'
-            placeholder='Puesto' 
-            onChange={handleChange}
-          />
+          <label className='info-text'>Puesto</label>
+            <Select
+              id="demo-simple-select"
+              size="small"
+              fullWidth
+              name='puesto'
+              onChange={handleChange}
+          >
+              <MenuItem value='Administrador'>Administrador</MenuItem>
+              <MenuItem value='Supervisor'>Supervisor</MenuItem>
+              <MenuItem value='Empleado'>Empleado</MenuItem>
+          </Select>
           <div className='spacing10' />
           <TextField  
-            variant="outlined" 
+            variant="outlined"
             size="small"
             fullWidth
             type='password'
@@ -99,15 +120,37 @@ export default function UserRegister() {
             placeholder='Contraseña'
             onChange={handleChange}
           />
-          {/*<br />
-          <br />
-          <label>Permisos:</label>
-          <select>
-            <option value='0'>Sin permisos</option>
-            <option value='1'>Empleado</option>
-            <option value='2'>Administrador</option>
-          </select>
-          */}
+          <div className='spacing10' />
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              Más Detalles
+            </AccordionSummary>
+            <AccordionDetails>
+            <TextField  
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='text'
+              name='vehiculo' 
+              placeholder='Vehiculo'
+              onChange={handleChange}
+            />
+            <div className='spacing10' />
+            <TextField  
+              variant="outlined" 
+              size="small"
+              fullWidth
+              type='text'
+              name='equipo' 
+              placeholder='Equipo Adicional'
+              onChange={handleChange}
+            />
+            </AccordionDetails>
+          </Accordion>
           <div className='spacing10' />
           <Button variant="contained" type='submit'>
             Registrar Usuario

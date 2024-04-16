@@ -18,6 +18,7 @@ import Slide from '@mui/material/Slide';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { dajon } from '../../Context/DashboardMenu';
+import AddIcon from '@mui/icons-material/Add';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -494,12 +495,17 @@ export default function ReportesForm() {
                       })}                      
                   </tbody>             
               </table>
-              <button onClick={(e)=>{
+              <div className='spacing5' />
+              <Button 
+                variant="contained"
+                color='primary'
+                startIcon={<AddIcon />}
+                onClick={(e)=>{
                 addInstrumento()
                 e.preventDefault()                
                 }}>
                   Agregar
-              </button>
+              </Button>
                 </AccordionDetails>
               </Accordion>
               <div className='spacing10' />

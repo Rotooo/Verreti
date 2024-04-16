@@ -31,4 +31,31 @@ export const dashboardMenu = [
     }
 ];
 
+export const adminMenu = [
+    {
+        id: 1,
+        title: 'Instrumentos',
+        icon: filterIcon,
+        url: '/instruments',
+    },
+    {
+        id: 2,
+        title: 'Empresas',
+        icon: companyIcon,
+        url: '/companies',
+    },
+    {
+        id: 3,
+        title: 'Reportes SSIB',
+        icon: reportIcon,
+        url: '/reportssid',
+    },
+    {
+        id: 5,
+        title: 'Usuarios',
+        icon: userIcon,
+        url: '/users',
+    }
+];
+
 export const dajon = "https://verreti-server-production.up.railway.app";

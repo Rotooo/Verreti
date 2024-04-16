@@ -10,6 +10,7 @@ const instrumentSchema = new Schema({
     clase: String,
     tipo_inspeccion: String,
     numero: Number,
+    aprovacion: String,
 })
 
 const instrument = mongoose.model('instrumentos', instrumentSchema);
