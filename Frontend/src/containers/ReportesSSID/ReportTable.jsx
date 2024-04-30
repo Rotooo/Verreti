@@ -3,10 +3,9 @@ import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import axios from 'axios';
 import { dajon } from '../../Context/DashboardMenu';
+import PrintIcon from '@mui/icons-material/Print';
 import {
-  GridRowModes,
   DataGrid,
-  GridToolbarContainer,
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
@@ -16,8 +15,11 @@ import {
   randomId,
   randomArrayItem,
 } from '@mui/x-data-grid-generator';
+import ReactPDF from '@react-pdf/renderer';
+import ReportPDF from './ReportPDF';
+import FullReport from './FullReport';
 
-const roles = ['Market', 'Finance', 'Development'];3
+const roles = ['Market', 'Finance', 'Development'];
 const randomRole = () => {
   return randomArrayItem(roles);
 };
@@ -67,6 +69,7 @@ function EditToolbar(props) {
 export default function FullFeaturedCrudGrid() {
   const [rows, setRows] = useState(initialRows);
   const [post, setPost] = useState([]);
+  const [tempo, setTempo] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
   const [dialogData, setDialogData] = useState(null);
 
@@ -102,6 +105,13 @@ export default function FullFeaturedCrudGrid() {
     setRowModesModel(newRowModesModel);
   };
 
+  const obtenerObjeto = (e) => {
+    axios.get(`${dajon}/report/reports/${e}`).then((response) => {
+      //setPost(response.data);
+      console.log(response.data);
+    });
+  };
+
   const columns = [
     { 
       field: 'reporteid', 
@@ -127,16 +137,23 @@ export default function FullFeaturedCrudGrid() {
       field: 'actions',
       type: 'actions',
       headerName: 'Acciones',
-      width: 100,
+      width: 300,
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
+          <GridActionsCellItem
+          icon={<PrintIcon />}
+          label="Delete"
+          onClick={(e) => obtenerObjeto(id)}
+          color="default"
+        />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="error"
           />,
+          <FullReport info={id} />
         ];
       },
     },

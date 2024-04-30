@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'; 
 import Img1 from '../../assets/img/Imagen1.png';
 import Img2 from '../../assets/img/Imagen2.png';
 import Img3 from '../../assets/img/Imagen3.png';
 import '../../assets/styles/report.css';
 
-export default function ReportTemplate() {
+export default function ReportTemplate(info) {
   return (
     <div className='report-template'>
         <div id="template">
@@ -30,7 +30,7 @@ export default function ReportTemplate() {
             <table className="table-content">
             <tbody>
             <tr>
-                <td scope="row" colSpan="4"><label><b>RAZON SOCIAL Y/O NOMBRE: </b> </label></td>
+                <td scope="row" colSpan="4"><label><b>RAZON SOCIAL Y/O NOMBRE: {info.v}</b> </label></td>
                 <td scope="row" colSpan="4"><label><b>RFC: </b></label></td>
                 <td scope="row" colSpan="4"><label><b>FOLIO: </b></label></td>
             </tr>

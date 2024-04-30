@@ -59,3 +59,4 @@ export const adminMenu = [
 ];
 
 export const dajon = "https://verreti-server-production.up.railway.app";
+//export const dajon = "http://localhost:2000";

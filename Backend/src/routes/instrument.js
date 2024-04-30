@@ -10,7 +10,7 @@ const getInstruments = (req, res) => {
 const getInstrument = (req, res) => {
     const { id } = req.params;
     instrument.findById(id)
-    .then((data)=>{res.json(data[0])}).catch((error)=>{console.log(error)})
+    .then((data)=>{res.json(data)}).catch((error)=>{console.log(error)})
 };
 
 const createInstrument = (req, res) => {

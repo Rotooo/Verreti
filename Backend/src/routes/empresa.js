@@ -10,7 +10,7 @@ const getEmpresas = (req, res) => {
 const getEmpresa = (req, res) => {
     const { id } = req.params;
     empresa.findById(id)
-    .then((data)=>{res.json(data[0])}).catch((error)=>{console.log(error)})
+    .then((data)=>{res.json(data)}).catch((error)=>{console.log(error)})
 };
 
 const createEmpresa = (req, res) => {

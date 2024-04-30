@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import axios from 'axios';
-import Dialog from './UserDetails';
 import { dajon } from '../../Context/DashboardMenu';
 import {
   GridRowModes,
@@ -17,7 +16,6 @@ import {
   randomId,
   randomArrayItem,
 } from '@mui/x-data-grid-generator';
-import { UserDialog } from './UserDialog';
 
 const roles = ['Market', 'Finance', 'Development'];3
 const randomRole = () => {
@@ -70,16 +68,11 @@ export default function FullFeaturedCrudGrid() {
   const [rows, setRows] = useState(initialRows);
   const [post, setPost] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
-  const [dialogData, setDialogData] = useState(null);
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
     }
-  };
-
-  const handleCloseDialog = () => {
-    setDialogData(null);
   };
 
   useEffect(() => {
@@ -97,10 +90,6 @@ export default function FullFeaturedCrudGrid() {
     } catch (error) {
       console.error('Error al eliminar el dato:', error);
     }
-  };
-
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
   };
 
   const processRowUpdate = (newRow) => {
@@ -147,11 +136,6 @@ export default function FullFeaturedCrudGrid() {
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
-          <UserDialog 
-            nombre={id.nombre}
-            app={id.app}
-            apm={id.apm}
-          />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"

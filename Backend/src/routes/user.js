@@ -10,7 +10,7 @@ const getUsers = (req, res) => {
 const getUser = (req, res) => {
     const { id } = req.params;
     user.find({correo: `${id}`})
-    .then((data)=>{res.json(data[0])}).catch((error)=>{console.log(error)})
+    .then((data)=>{res.json(data)}).catch((error)=>{console.log(error)})
 };
 
 const createUser = (req, res) => {
