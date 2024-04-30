@@ -11,12 +11,23 @@ import Img1 from '../../assets/img/Imagen1.png';
 import Img2 from '../../assets/img/Imagen2.png';
 import Img3 from '../../assets/img/Imagen3.png';
 import '../../assets/styles/report.css';
+import PrintIcon from '@mui/icons-material/Print';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import axios from 'axios';
 import { dajon } from '../../Context/DashboardMenu';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+function imprimirDiv() {
+  const contenidoDiv = document.getElementById('template').innerHTML;
+  const ventanaNueva = window.open('', '_blank', 'width=1000,height=1000');
+  ventanaNueva.document.write('<html><head></head><body>');
+  ventanaNueva.document.write(contenidoDiv);
+  ventanaNueva.document.write('</body></html>');
+  ventanaNueva.print();
+}
 
 export default function FullReport(info) {
   const [open, setOpen] = React.useState(false);
@@ -28,7 +39,11 @@ export default function FullReport(info) {
           setReport(response.data);
         }).catch((error)=>{console.log(error)});
         setOpen(true);
-    };
+  };
+
+  const handlePrint = () => {
+    imprimirDiv();
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -36,9 +51,9 @@ export default function FullReport(info) {
 
   return (
     <React.Fragment>
-      <Button size='small' variant="outlined" onClick={handleClickOpen}>
-        Abrir
-      </Button>
+      <IconButton size='small' variant="outlined" onClick={handleClickOpen}>
+        <VisibilityIcon />
+      </IconButton>
       <Dialog
         fullScreen
         open={open}
@@ -56,8 +71,11 @@ export default function FullReport(info) {
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Sound
+              Reporte {report.folio}
             </Typography>
+            <Button autoFocus color="inherit" startIcon={<PrintIcon />} onClick={handlePrint}>
+              Imprimir
+            </Button>
           </Toolbar>
         </AppBar>
         <div className='report-template'>
@@ -84,33 +102,34 @@ export default function FullReport(info) {
                 <table className="table-content">
                 <tbody>
                 <tr>
-                    <td scope="row" colSpan="4"><label><b>RAZON SOCIAL Y/O NOMBRE: {report.nombre_empres}</b> </label></td>
-                    <td scope="row" colSpan="4"><label><b>RFC: </b></label></td>
-                    <td scope="row" colSpan="4"><label><b>FOLIO: </b></label></td>
+                    <td scope="row" colSpan="4"><label><b>RAZON SOCIAL Y/O NOMBRE:</b> {report.nombre_empresa}</label></td>
+                    <td scope="row" colSpan="4"><label><b>RFC:</b> {report.rfc}</label></td>
+                    <td scope="row" colSpan="4"><label><b>FOLIO:</b> {report.folio}</label></td>
                 </tr>
                 <tr>
-                    <td scope="row" colSpan="4"><label><b>CALLE Y N°: </b></label></td>
-                    <td scope="row" colSpan="4"><label><b>CORREO: </b></label></td>
-                    <td scope="row" colSpan="4"><label><b>FECHA DE SOLICITUD:  </b></label></td>
+                    <td scope="row" colSpan="4"><label><b>CALLE Y N°:</b> {report.calle}</label></td>
+                    <td scope="row" colSpan="4"><label><b>CORREO:</b> {report.correo}</label></td>
+                    <td scope="row" colSpan="4"><label><b>FECHA DE SOLICITUD:</b> {report.fecha}</label></td>
                 </tr>
                 <tr>
-                    <td scope="row" colSpan="4"><label><b>COLONIA:  </b></label></td>
-                    <td scope="row" colSpan="4"><label><b>CP: </b></label></td>
-                    <td scope="row" colSpan="4"><label><b>TELEFONO:  </b></label></td>
+                    <td scope="row" colSpan="4"><label><b>COLONIA:</b> {report.colonia}</label></td>
+                    <td scope="row" colSpan="4"><label><b>CP:</b> {report.cp}</label></td>
+                    <td scope="row" colSpan="4"><label><b>TELEFONO:</b> {report.telefono}</label></td>
                 </tr>
                 <tr>
-                    <td scope="row" colSpan="4"><label><b>MUNICIPIO: </b></label></td>
-                    <td scope="row" colSpan="2.5"><label><b>ESTADO:  </b></label></td>
-                    <td scope="row" colSpan="2.5"><label><b>UTM:  </b></label></td>
-                    <td scope="row" colSpan="2.5"><label><b>GIRO:  </b></label></td>
+                    <td scope="row" colSpan="4"><label><b>MUNICIPIO:</b> {report.municipio}</label></td>
+                    <td scope="row" colSpan="2.5"><label><b>ESTADO:</b> {report.estado}</label></td>
+                    <td scope="row" colSpan="2.5"><label><b>UTM:</b></label></td>
+                    <td scope="row" colSpan="2.5"><label><b>GIRO:</b> {report.giro}</label></td>
                 </tr>
                 <tr>
                     <td scope="row" colSpan="6"></td>
-                    <td scope="row" colSpan="2.5"><label><b>Data  </b></label></td>
-                    <td scope="row" colSpan="2.5"><label><b>Data  </b></label></td>
+                    <td scope="row" colSpan="2.5"><label>{report.latitud}</label></td>
+                    <td scope="row" colSpan="2.5"><label>{report.longitud}</label></td>
                 </tr>
                 <tr>
                     <td scope="row" colSpan="10" className="table-h4">
+                      <hr size="1" />
                     <center>
                         <h4>DATOS DEL INSTRUMENTO</h4>
                     </center>

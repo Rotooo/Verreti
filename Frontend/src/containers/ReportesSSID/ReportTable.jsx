@@ -141,19 +141,13 @@ export default function FullFeaturedCrudGrid() {
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
-          <GridActionsCellItem
-          icon={<PrintIcon />}
-          label="Delete"
-          onClick={(e) => obtenerObjeto(id)}
-          color="default"
-        />,
+          <FullReport info={id} />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="error"
           />,
-          <FullReport info={id} />
         ];
       },
     },
