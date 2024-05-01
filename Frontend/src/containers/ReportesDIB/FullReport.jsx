@@ -54,7 +54,7 @@ export default function FullReport(info) {
   const [report, setReport] = React.useState(falserep);
 
   const handleClickOpen = () => {
-      axios.get(`${dajon}/report/reports/${info.info}`).then((response) => {
+      axios.get(`${dajon}/bascreport/bascreports/${info.info}`).then((response) => {
           console.log(response.data);
           setReport(response.data);
         }).catch((error)=>{console.log(error)});
@@ -91,7 +91,7 @@ export default function FullReport(info) {
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Reporte de Solicitud de Servicios de Inspección de Básculas [ {report.folio} ]
+              Reporte de Dictamen de Inspección de Básculas [ {report.folio} ]
             </Typography>
             <Button autoFocus color="inherit" startIcon={<PrintIcon />} onClick={handlePrint}>
               Imprimir
@@ -105,10 +105,10 @@ export default function FullReport(info) {
                 <tbody>
                 <tr>
                     <th>
-                    <p><b>SC-F-01A/10</b> Unidad  de Inspección Acreditada por ema a.c., con numero de acreditación UVIM-188</p>
-                    <h4>SOLICITUD DE SERVICIO DE INSPECCION DE BÁSCULAS</h4>
+                    <p><b>SC-F-35A/10</b> Unidad  de Inspección Acreditada por ema a.c., con numero de acreditación UVIM-188</p>
+                    <h4>DICTAMEN DE INSPECCIÓN DE BÁSCULAS</h4>
                     <h5>NOM-010-SCFI-1994- Instrumentos de Medición- Instrumentos para pesar de funcionamiento</h5>
-                    <h5>No  automático- Requisitos técnicos  Metrológicos.</h5>
+                    <h5>No  automático- Requisitos técnicos  Metrológicos.Bajo y Mediano Alcance de Medición Máx. 5000 KG</h5>
                     </th>
                     <th><img src={Img1} width="50%" /></th>
                     <th>
@@ -173,7 +173,7 @@ export default function FullReport(info) {
                       <td><label><b>{e+1}</b></label></td>
                       <td><label><b>{ins.marca}</b></label></td>
                       <td><label><b>{ins.modelo}</b></label></td>
-                      <td><label><b>{ins.numero}</b></label></td>
+                      <td><label><b>{ins.codigo}</b></label></td>
                       <td><label><b>{ins.tipo}</b></label></td>
                       <td><label><b>{ins.alcance_max}</b></label></td>
                       <td><label><b>{ins.division_min}</b></label></td>

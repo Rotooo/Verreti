@@ -24,6 +24,12 @@ export const dashboardMenu = [
         url: '/reportssid',
     },
     {
+        id: 4,
+        title: 'Reportes DIB',
+        icon: reportIcon,
+        url: '/reportdib',
+    },
+    {
         id: 5,
         title: 'Usuarios',
         icon: userIcon,

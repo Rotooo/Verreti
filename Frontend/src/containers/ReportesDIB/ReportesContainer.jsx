@@ -7,7 +7,7 @@ export default function ReportesContainer() {
   return (
     <div>
       <div className='spacing15' />
-        <h1>Reportes de Solicitud de Servicios de Inspección de Básculas</h1>
+        <h1>Reportes de Dictamen de Inspección de Básculas</h1>
       <div className='spacing15' />
         <ReportForm />
       <div className='spacing15' />

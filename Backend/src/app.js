@@ -4,6 +4,7 @@ import userr from "./routes/user.js";
 import reporrt from "./routes/report.js";
 import emprresa from "./routes/empresa.js";
 import instrrument from "./routes/instrument.js";
+import bascreporrt from "./routes/bascRep.js";
 import mongoose from "mongoose";
 import cors from 'cors';
 
@@ -24,6 +25,7 @@ app.use("/user",userr);
 app.use("/report", reporrt);
 app.use("/empresa", emprresa);
 app.use("/instrumento", instrrument);
+app.use("/bascreport", bascreporrt);
 
 //cors
 /*const corsOptions ={

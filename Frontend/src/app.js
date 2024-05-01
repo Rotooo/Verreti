@@ -10,6 +10,7 @@ import ReportPageT from './pages/ReportPage';
 import TestPage from './pages/TestPage';
 import LoginPage from './pages/LoginPage';
 import ErrorPage from './pages/ErrorPage';
+import ReportDIB from './pages/ReportsDIB';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -34,6 +35,7 @@ export default function app() {
             <Route path='/companies' element={<ClientPage />} />
             <Route path='/instruments' element={<InstruPage />} />
             <Route path='/reportssid' element={<ReportPage />} />
+            <Route path='/reportdib' element={<ReportDIB />} />
             <Route path='/users' element={<UsersPage />} />
             <Route path='/reportT' element={<ReportPageT />} />
             <Route path='/test' element={<TestPage />} />
